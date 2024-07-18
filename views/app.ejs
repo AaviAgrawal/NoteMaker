@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="main w-full min-h-screen bg-zinc-900">
+    <div class="form px-10 py-10">
+      <form action="/createUser" method="post">
+        <input class="block w-full bg-zinc-600 text-white px-5 py-2 rounded-md outline-none" type="text" name="Name"
+          placeholder="Task Name">
+        <textarea class="block w-full bg-zinc-600 resize-none text-white px-5 py-2 rounded-md mt-2 outline-none"
+          name="TextName" placeholder="Write somtihing about text..."></textarea>
+        <input
+          class="btn transition-all bg-blue-800 text-white px-7 mt-2 border-2 rounded-md border-transparent cursor-pointer py-2"
+          type="submit" value="Create Task">
+      </form>
+    </div>
+    <div class="tasks px-10 py-20 flex gap-4 felx-wrap">
+      <% if(files.length> 0){ %>
+        <% files.forEach(function(file){ %>
+          <div class="task w-72 p-3 bg-zinc-600 text-white bg-white rounded-md">
+            <h3 class="text-2xl mb-3">
+              <%= file.name %>
+            </h3>
+            <% if(file.content.length> 15){ %>
+              <p>
+                <%= file.content.substring(0,16)+'...' %>
+              </p>
+              <% }else{ %>
+                <p>
+                  <%= file.content %>
+                </p>
+                <% } %>
+                  <div class="flex justify-between items-center mt-2">
+                    <a class="text-blue-500 none-underline" href="/read/<%= file.name %>">Read More</a>
+                    <a class="text-red-600 none-underline" href="/delete/<%= file.name %>">Delete</a>
+                    <a href="/edit/<%= file.name %>" class="text-zinc-800">Edit Filename</a>
+                  </div>
+          </div>
+          <% }) %>
+            <% } else { %>
+              <p class="px-10 text-gray-500 mt-10">No Tasks Yet</p>
+              <% } %>
+    </div>
+  </div>
+  <script>
+    let btn = document.querySelector(".btn");
+    btn.addEventListener("click", function () {
+      btn.style.scale = "0.9";
+    })
+  </script>
+</body>
+
+</html>
